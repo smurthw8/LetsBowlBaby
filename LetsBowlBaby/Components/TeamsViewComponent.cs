@@ -25,7 +25,7 @@ namespace LetsBowlBaby.Components
             //bring in repo, select distinct colomns entries to filter by
             var teamslist = repo.Teams.Select(x => x.TeamName)
                 .Distinct()
-                .OrderBy(x => x);
+                .OrderBy(x => x).ToList();
             //return thing to filterby to view
             return View(teamslist);
         }

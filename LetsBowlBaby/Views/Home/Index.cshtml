@@ -1,10 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "test";
 }
 
 @model BowlBabyViewModel
 
-<h1>Bowlers</h1>
+<h1>Bowlers  @(ViewBag.SelectedTeam == null ? "" : "- " + ViewBag.Selectedteam )</h1> 
 
 <div class="row m-1 p-1">
     <div id="teams" class="col-3">
@@ -16,33 +16,28 @@
         @foreach (Bowler b in Model.Bowlers)
         {
 
-            <div class="card card-outline-primary m-1 p-1">
-                <div class="bg-light p-1">
-                    <h4>
-                        @b.BowlerID - @b.BowlerLastName,@(b.BowlerMiddleInit != null ?  " "+ b.BowlerMiddleInit + "." : "") @b.BowlerFirstName
-                    </h4>
-                </div>
-                <div class="card-text p-1">
-                    <ul>
-                        <li>Team: @b.Team.TeamName</li>
-                        <li>Street Address: @b.BowlerAddress</li>
-                        <li>City: @b.BowlerCity</li>
-                        <li>State: @b.BowlerState</li>
-                        <li>Zip: @b.BowlerZip</li>
-                        <li>Phone Number: @b.BowlerPhoneNumber</li>
-                    </ul>
-                </div>
-                <form method="post" asp-page="/Cart">
-                    @*<input type="hidden" asp-for="@b.BowlerID" />*@
-                    @*<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />*@
-                    <span class="card-text">
-                        <button type="submit" class="btn btn-success btn-sm float-right">Add to Cart</button>
-                    </span>
-                </form>
-                <span class="badge badge-pill">
-                    <button type="submit" class="btn btn-danger btn-sm float-right">Delete</button>
-                </span>
+        <div class="card card-outline-primary m-1 p-1">
+            <div class="bg-light p-1">
+                <h4>
+                    @b.BowlerLastName,@(b.BowlerMiddleInit != null ?  " "+ b.BowlerMiddleInit + "." : "") @b.BowlerFirstName
+                </h4>
             </div>
+            <div class="card-text p-1">
+                <ul>
+                    <li>Team: @b.Team.TeamName</li>
+                    <li>Street Address: @b.BowlerAddress</li>
+                    <li>City: @b.BowlerCity</li>
+                    <li>State: @b.BowlerState</li>
+                    <li>Zip: @b.BowlerZip</li>
+                    <li>Phone Number: @b.BowlerPhoneNumber</li>
+                </ul>
+            </div>
+            <span class="card-text">
+                <a asp-controller="Home" asp-action="Edit" asp-route-bowlerid="@b.BowlerID" class="btn btn-primary btn-sm float-right">Edit</a>
+                <a asp-controller="Home" asp-action="Edit" asp-route-bowlerid="@b.BowlerID" class="btn btn-danger btn-sm float-right mr-2">Delete</a>
+            </span>        
+
+        </div>
         }
     </div>
 </div>

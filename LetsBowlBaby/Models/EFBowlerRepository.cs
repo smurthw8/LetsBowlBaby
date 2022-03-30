@@ -14,5 +14,21 @@ namespace LetsBowlBaby.Models
 
         public IQueryable<Bowler> Bowlers => _context.Bowlers;
         public IQueryable<Team> Teams => _context.Teams;
+
+        public void SaveBowler(Bowler bl)
+        {
+            _context.Update(bl);
+            _context.SaveChanges();
+        }
+        public void AddBowler(Bowler bl)
+        {
+            _context.Add(bl);
+            _context.SaveChanges();
+        }
+        public void DeleteBowler(Bowler bl)
+        {
+            _context.Remove(bl);
+            _context.SaveChanges();
+        }
     }
 }
