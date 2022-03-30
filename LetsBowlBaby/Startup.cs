@@ -31,6 +31,8 @@ namespace LetsBowlBaby
            {
                options.UseMySql(Configuration["ConnectionStrings:BowlersDbConnection"]);
            });
+
+            services.AddScoped<IBowlerRepository, EFBowlerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +57,9 @@ namespace LetsBowlBaby
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("team", "{team}",
+                    new { Controller = "Home", action = "Index"});
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

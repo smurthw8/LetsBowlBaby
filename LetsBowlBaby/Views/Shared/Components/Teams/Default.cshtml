@@ -1,0 +1,22 @@
+﻿@{
+}
+
+@model IEnumerable<string>
+
+<div class="container">
+    <p>Buy More Books 4 Less Bucks :)</p>
+    <div class="d-grid mb-2">
+
+        <a asp-controller="Home" asp-action="Index" asp-route-team="" 
+           class="btn w-100 @(ViewBag.SelectedTeam == null ? "btn-primary" : "btn-outline-secondary")">Home</a>
+    </div>
+
+    @foreach (string tm in Model)
+    {
+        <div class="d-grid mb-2">
+            <a asp-controller="Home" asp-action="Index" asp-route-team="@tm" 
+               class="btn w-100 @(ViewBag.SelectedTeam == tm ? "btn-primary" : "btn-outline-secondary")">@tm</a>
+        </div>
+    }
+</div>
+

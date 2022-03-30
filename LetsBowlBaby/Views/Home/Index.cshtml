@@ -2,20 +2,47 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model  List<Bowler>
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model BowlBabyViewModel
 
 <h1>Bowlers</h1>
 
-<ul>
-    @foreach (var b in Model)
-    {
-        <li>@b.BowlerID - @b.BowlerLastName,@(b.BowlerMiddleInit != null ?  " "+ b.BowlerMiddleInit + "." : "") @b.BowlerFirstName</li>
-        <li>@b.TeamTeamName.</li>
-        }
-</ul>
+<div class="row m-1 p-1">
+    <div id="teams" class="col-3">
+        @*//pull in view componenet*@
+        <vc:teams></vc:teams>
+    </div>
 
+    <div class="col-9">
+        @foreach (Bowler b in Model.Bowlers)
+        {
+
+            <div class="card card-outline-primary m-1 p-1">
+                <div class="bg-light p-1">
+                    <h4>
+                        @b.BowlerID - @b.BowlerLastName,@(b.BowlerMiddleInit != null ?  " "+ b.BowlerMiddleInit + "." : "") @b.BowlerFirstName
+                    </h4>
+                </div>
+                <div class="card-text p-1">
+                    <ul>
+                        <li>Team: @b.Team.TeamName</li>
+                        <li>Street Address: @b.BowlerAddress</li>
+                        <li>City: @b.BowlerCity</li>
+                        <li>State: @b.BowlerState</li>
+                        <li>Zip: @b.BowlerZip</li>
+                        <li>Phone Number: @b.BowlerPhoneNumber</li>
+                    </ul>
+                </div>
+                <form method="post" asp-page="/Cart">
+                    @*<input type="hidden" asp-for="@b.BowlerID" />*@
+                    @*<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />*@
+                    <span class="card-text">
+                        <button type="submit" class="btn btn-success btn-sm float-right">Add to Cart</button>
+                    </span>
+                </form>
+                <span class="badge badge-pill">
+                    <button type="submit" class="btn btn-danger btn-sm float-right">Delete</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>

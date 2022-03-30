@@ -7,25 +7,36 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LetsBowlBaby.Models;
 using Microsoft.EntityFrameworkCore;
+using LetsBowlBaby.Models.ViewModels;
 
 namespace LetsBowlBaby.Controllers
 {
     public class HomeController : Controller
     {
-        private BowlDBContext _context { get; set; }
+        private IBowlerRepository _repo { get; set; }
 
-        public HomeController(BowlDBContext temp)
+        public HomeController(IBowlerRepository temp)
         {
-            _context = temp;
+            _repo = temp;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string team)
         {
-            List<Team> teams = _context.Teams.ToList();
-            var blah = _context.Bowlers
-                .Include(x => x.Team)
-                .ToList();
-            return View(blah);
+            //List<Team> Teams = _repo.Teams.ToList();
+            //ViewBag.roster = _repo.Bowlers
+            //    .Include(x => x.Team)
+            //    .ToList();
+
+            var viewmod = new BowlBabyViewModel
+            {
+                //where > filters to where category = category passed in OR | if no category specified
+                Bowlers = _repo.Bowlers.Include(x => x.Team)
+                .Where(p => p.Team.TeamName == team || team == null)
+                .OrderBy(p => p.BowlerLastName),
+
+            };
+
+            return View(viewmod);
         }
 
     }
